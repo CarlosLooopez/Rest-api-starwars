@@ -1,10 +1,11 @@
 from flask import jsonify, url_for
 
+
 class APIException(Exception):
     status_code = 400
 
-    def __init__(self, message, status_code=None, payload=None):
-        Exception.__init__(self)
+    def init(self, message, status_code=None, payload=None):
+        Exception.init(self)
         self.message = message
         if status_code is not None:
             self.status_code = status_code
@@ -15,10 +16,12 @@ class APIException(Exception):
         rv['message'] = self.message
         return rv
 
+
 def has_no_empty_params(rule):
     defaults = rule.defaults if rule.defaults is not None else ()
     arguments = rule.arguments if rule.arguments is not None else ()
     return len(defaults) >= len(arguments)
+
 
 def generate_sitemap(app):
     links = ['/admin/']
@@ -30,7 +33,8 @@ def generate_sitemap(app):
             if "/admin/" not in url:
                 links.append(url)
 
-    links_html = "".join(["<li><a href='" + y + "'>" + y + "</a></li>" for y in links])
+    links_html = "".join(["<li><a href='" + y + "'>" +
+                         y + "</a></li>" for y in links])
     return """
         <div style="text-align: center;">
         <img style="max-height: 80px" src='https://storage.googleapis.com/breathecode/boilerplates/rigo-baby.jpeg' />
